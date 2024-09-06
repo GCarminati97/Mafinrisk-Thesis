@@ -1,5 +1,5 @@
 # Mafinrisk-Thesis
-Mafinrisk Thesis Script
+
 The aim of this thesis is to estimate the European call price surface and the state price density.
 The estimation of the price surface is both a fundamental goal of financial mathematics and
 an arduous task to perform, due to dissimilarity of the strikes and maturities available, the
