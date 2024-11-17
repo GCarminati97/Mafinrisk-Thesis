@@ -1,0 +1,38 @@
+import numpy as np
+from scipy.stats import norm
+from scipy.optimize import minimize
+from scipy.integrate import quad
+
+now = "13/08/2024"
+T1,T2 = "13/08/2025", "13/10/2025" 
+O1,O2 = "10/08/2025", "10/10/2025" 
+K = 100
+t = "13/04/2025"
+
+def g(t,O):
+    
+    
+g1= g()
+    
+def integrand_F(s,x,t,O,T):
+    
+    exp_g = np.exp(g(s,O))
+    pdf_f = norm.pdf(s, loc=x, scale=np.sqrt(O-t))
+   
+    return exp_g*pdf_f
+
+def payoff(x,t,O1,T1,O2,T2,K):
+    
+    F1, _ = quad(integrand_F,-np.inf,np.inf,args=(t,O1,T1))
+    F2, _ = quad(integrand_F,-np.inf,np.inf,args=(t,O2,T2))
+    
+    return np.max(F2 - F1 - K,0)
+
+def integrand_payoff(x,t,O1,T1,O2,T2,K):
+    
+    payoff_value =payoff(x,t,O1,T1,O2,T2,K)
+    pdf_value = norm.pdf(x, loc=0, scale=np.sqrt(t))
+   
+    return payoff_value*pdf_value
+
+CS, _ = quad(integrand_payoff,-np.inf,np.inf,args=(t,O1,T1,O2,T2,K))
